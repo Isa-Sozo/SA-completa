@@ -1,8 +1,18 @@
 import express from 'express';
-// Importa as funções atualizadas do controller de cartões
-import { listarCartoes, adicionarCartao, listarMeusCartoes } from '../controllers/cartoesController.js'; 
-// Importa as funções do controller de uso (como no original do usuário)
-import { usarCartao, verExtratoUsos } from '../controllers/usoCartaoController.js';
+
+// Importa as funções do controller de cartões
+import { 
+  listarCartoes, 
+  adicionarCartao, 
+  listarMeusCartoes 
+} from '../controllers/cartoesController.js'; 
+
+// Importa as funções do controller de uso
+import { 
+  usarCartao, 
+  verExtratoUsos // Nome corrigido
+} from '../controllers/usoCartaoController.js';
+
 // Importa o middleware de proteção
 import { proteger } from '../middleware/authMiddleware.js';
 
@@ -13,7 +23,9 @@ const router = express.Router();
 // O middleware 'proteger' será executado para todas elas
 router.use(proteger);
 
-// --- NOVAS ROTAS ---
+
+// --- ROTAS DO DASHBOARD / USUÁRIO ---
+
 // Rota para o dashboard buscar os cartões do usuário logado
 // GET /api/cartoes/meus-cartoes
 router.get('/meus-cartoes', listarMeusCartoes);
@@ -22,15 +34,13 @@ router.get('/meus-cartoes', listarMeusCartoes);
 // POST /api/cartoes/
 router.post('/', adicionarCartao);
 
-
-// --- ROTAS ANTIGAS (AGORA PROTEGIDAS) ---
 // Rota para usar um cartão
 // POST /api/cartoes/usar
 router.post('/usar', usarCartao);
 
 // Rota para ver o extrato de um cartão específico
 // GET /api/cartoes/:id_cartao/extrato
-router.get('/:id_cartao/extrato', verExtratoUsos);
+router.get('/:id_cartao/extrato', verExtratoUsos); // Nome corrigido
 
 
 // --- ROTA DE ADMIN ---
