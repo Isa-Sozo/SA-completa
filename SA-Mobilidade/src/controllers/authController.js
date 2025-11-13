@@ -5,14 +5,21 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Registrar novo usuário
 export const register = async (req, res) => {
-  const { nome, email, senha } = req.body;
+  // 1. Receba o CPF
+  const { nome, email, senha, cpf } = req.body; // << ADICIONE O CPF
 
   try {
+    // 2. (Opcional) Verifique se o CPF já existe
+    if (cpf) {
+        const cpfResult = await pool.query('SELECT * FROM usuarios WHERE cpf = $1', [cpf]);
+        if (cpfResult.rows.length > 0) {
+            return res.status(400).json({ mensagem: 'CPF já cadastrado' });
+        }
+    }
+
     // Verifica se o e-mail já existe
     const result = await pool.query('SELECT * FROM usuarios WHERE email = $1', [email]);
-    
     if (result.rows.length > 0) {
       return res.status(400).json({ mensagem: 'Email já cadastrado' });
     }
@@ -20,10 +27,10 @@ export const register = async (req, res) => {
     // Criptografa a senha
     const senhaHash = await bcrypt.hash(senha, 10);
 
-    // Insere o usuário no banco
+    // 3. Insere o usuário no banco (com CPF)
     await pool.query(
-      'INSERT INTO usuarios (nome, email, senha) VALUES ($1, $2, $3)',
-      [nome, email, senhaHash]
+      'INSERT INTO usuarios (nome, email, senha, cpf) VALUES ($1, $2, $3, $4)', // << ATUALIZE A QUERY
+      [nome, email, senhaHash, cpf] // << ADICIONE O CPF
     );
 
     res.status(201).json({ mensagem: 'Usuário registrado com sucesso' });

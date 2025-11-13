@@ -4,7 +4,7 @@ import pool from '../config/db.js';
 export const listarEmpresas = async (req, res) => {
   try {
     // Busca as enmpresas no banco
-    const result = await pool.query('SELECT * FROM empresas');
+    const result = await pool.query('SaELECT * FROM empresas');
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ erro: 'Erro ao listar empresas' });

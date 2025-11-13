@@ -1,24 +1,34 @@
 import express from 'express';
-import dotenv from 'dotenv';
-import usuariosRoutes from './routes/usuariosRoutes.js';
-import authRoutes from './routes/authRoutes.js';
-import cartoesRoutes from './routes/cartoesRoutes.js';
-import empresasRoutes from './routes/empresasRoutes.js';
-import recargasRoutes from './routes/recargasRoutes.js';
+    import dotenv from 'dotenv';
+    import cors from 'cors'; // 1. Importe o cors
+    import usuariosRoutes from './routes/usuariosRoutes.js';
+    import authRoutes from './routes/authRoutes.js';
+    import cartoesRoutes from './routes/cartoesRoutes.js';
+    import empresasRoutes from './routes/empresasRoutes.js';
+    import recargasRoutes from './routes/recargasRoutes.js';
 
-dotenv.config();
+    dotenv.config();
 
-const app = express();
-app.use(express.json());
+    const app = express();
 
-app.get('/', (req, res) => res.send('API is very Spinning'));
+    // 2. Use o middleware do CORS
+    // Isso permitirá requisições de qualquer origem (bom para desenvolvimento)
+    app.use(cors()); 
 
-app.use('/usuarios', usuariosRoutes);
-app.use('/auth', authRoutes);
-app.use('/cartoes', cartoesRoutes);
-app.use('/empresas', empresasRoutes);
-app.use('/recargas', recargasRoutes);
+    app.use(express.json()); // Middleware para parsear JSON
 
-app.listen(process.env.PORT || 3000, () =>
-  console.log(`Servidor rodando na porta ${process.env.PORT}`)
-);
+    // Rota principal
+    app.get('/', (req, res) => res.send('API SA-Mobilidade está no ar!'));
+
+    // Rotas da aplicação
+    app.use('/api/usuarios', usuariosRoutes);
+    app.use('/api/auth', authRoutes);
+    app.use('/api/cartoes', cartoesRoutes);
+    app.use('/api/empresas', empresasRoutes);
+    app.use('/api/recargas', recargasRoutes);
+
+    const PORT = process.env.PORT || 3000;
+
+    app.listen(PORT, () =>
+      console.log(`Servidor rodando na porta ${PORT}`)
+    );
