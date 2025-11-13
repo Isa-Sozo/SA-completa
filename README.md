@@ -126,5 +126,11 @@ SA-Mobilidade/
 ├── empresasRoutes.js
 ├── cartoesRoutes.js
 └── recargasRoutes.js
+└── middleware/
+├── authMiddleware.js
+SA-Mobilidade-front/
+index.html
+dashboard.html
+register.html
 
 
