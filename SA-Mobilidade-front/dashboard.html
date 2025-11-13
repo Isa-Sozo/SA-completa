@@ -20,7 +20,7 @@
 
     <div class="max-w-md mx-auto min-h-screen app-bg shadow-lg">
 
-        <!-- ===== HEADER ===== -->
+        <!-- ===== HEADER (Sem mudanças) ===== -->
         <header class="sticky top-0 z-10 w-full bg-white shadow-md">
             <div class="flex items-center justify-between h-16 px-4">
                 <div class="flex items-center">
@@ -45,12 +45,11 @@
         <!-- ===== CONTEÚDO PRINCIPAL ===== -->
         <main class="p-4 space-y-4">
 
-            <!-- ***** MENSAGEM DE ERRO (ATUALIZADO) ***** -->
             <div id="dashboard-error" class="hidden p-4 rounded-lg bg-red-100 text-red-700 text-sm shadow">
-                <!-- Mensagens de erro do dashboard aparecerão aqui -->
+                <!-- Mensagens de erro -->
             </div>
             
-            <!-- Card 1: Banner -->
+            <!-- Card 1: Banner (Sem mudanças) -->
             <div class="relative w-full h-32 bg-blue-500 rounded-lg overflow-hidden shadow">
                 <div class="absolute inset-0 opacity-10"><svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 40" preserveAspectRatio="none"><g fill="white"><path d="M5 5h10v5H5z M25 5h10v5H25z M45 5h10v5H45z M65 5h10v5H65z M15 15h10v5H15z M35 15h10v5H35z M55 15h10v5H55z M75 15h10v5H75z M5 25h10v5H5z M25 25h10v5H25z M45 25h10v5H45z M65 25h10v5H65z M15 35h10v5H15z M35 35h10v5H35z M55 35h10v5H55z M75 35h10v5H75z"></path></g></svg></div>
                 <div class="absolute inset-0 flex items-center justify-center"><h2 class="text-xl font-bold text-white text-center px-4">Conectando destinos,<br>facilitando trajetos</h2></div>
@@ -65,12 +64,26 @@
                     <div class="flex-1 bg-blue-600 rounded-lg p-4 text-white shadow-inner">
                         <div class="flex items-center justify-between"><span class="text-3xl font-bold" id="saldo-display">R$ ********</span><button id="toggle-saldo" class="text-blue-100 hover:text-white"><svg id="icon-eye-visible" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg><svg id="icon-eye-hidden" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.22 16.338 7.244 19.5 12 19.5c.99 0 1.953-.138 2.863-.395M6.228 6.228A10.46 10.46 0 0 1 12 4.5c4.756 0 8.78 3.162 10.065 7.498a10.523 10.523 0 0 1-4.293 5.77M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.243 4.243L6.228 6.228" /></svg></button></div><span class="text-sm text-blue-100">Saldo Disponível</span>
                     </div>
-                    <div class="flex flex-col space-y-2"><button class="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700"><span>Recarregar</span><svg class="h-5 w-5 ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182.997-.75 2.342-.75 3.339 0L12 12.01M12 6v12" /></svg></button><button class="px-4 py-2 bg-white text-blue-600 rounded-lg font-semibold shadow hover:bg-gray-50 border border-blue-600">Repetir Recarga</button></div>
+                    
+                    <!-- === MUDANÇA AQUI (HTML) === -->
+                    <!-- O botão de Recarregar agora é um link (<a>) -->
+                    <!-- Ele começa desabilitado e será ativado pelo JavaScript -->
+                    <div class="flex flex-col space-y-2">
+                        <a id="recharge-link" href="#" class="pointer-events-none opacity-50"> <!-- Começa desabilitado -->
+                            <button class="w-full flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700">
+                                <span>Recarregar</span>
+                                <svg class="h-5 w-5 ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182.997-.75 2.342-.75 3.339 0L12 12.01M12 6v12" /></svg>
+                            </button>
+                        </a>
+                        <button class="px-4 py-2 bg-white text-blue-600 rounded-lg font-semibold shadow hover:bg-gray-50 border border-blue-600">Repetir Recarga</button>
+                    </div>
+                    <!-- === FIM DA MUDANÇA (HTML) === -->
+
                 </div>
                 <div class="flex items-center space-x-2 text-sm text-gray-600"><svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg><span id="last-use">Última utilização em: --/--/----</span></div>
             </div>
 
-            <!-- Card 3: Informações -->
+            <!-- Card 3: Informações (Sem mudanças) -->
             <div class="card-bg rounded-lg p-4 space-y-4 shadow">
                 <div class="flex items-center space-x-2"><svg class="h-6 w-6 text-blue-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg><span class="font-bold text-blue-800">Informações</span></div>
                 <div class="bg-white/70 rounded-lg p-3"><h4 class="font-bold text-gray-800">Sobre Nossa Empresa</h4><p class="text-sm text-gray-700 mt-1">A Sicogf é a principal empresa de transporte público da Grande Florianópolis, oferecendo viagens seguras, confiáveis e pontuais. Com frota moderna e atendimento de qualidade, conectamos você aos seus destinos com eficiência.</p></div>
@@ -81,27 +94,22 @@
     </div>
 
     <script>
-        // --- ATUALIZAÇÃO AQUI ---
-        // Função para mostrar erros no dashboard
+        // Função para mostrar erros no dashboard (Sem mudanças)
         function mostrarErro(mensagem, ehHtml = false) {
             const errorDiv = document.getElementById('dashboard-error');
-            
             if (ehHtml) {
-                errorDiv.innerHTML = mensagem; // Permite renderizar o link
+                errorDiv.innerHTML = mensagem;
             } else {
                 errorDiv.textContent = mensagem;
             }
-            
             errorDiv.classList.remove('hidden');
-            // Role para o topo para ver o erro
             window.scrollTo(0, 0);
         }
 
-        // Função para redirecionar para o login
+        // Função para redirecionar para o login (Sem mudanças)
         function redirecionarParaLogin(mensagem) {
             localStorage.removeItem('token');
             localStorage.removeItem('usuario');
-            // Salva a mensagem de erro para mostrá-la no login (opcional)
             sessionStorage.setItem('loginError', mensagem);
             window.location.href = 'index.html';
         }
@@ -110,12 +118,11 @@
             const token = localStorage.getItem('token');
             const usuario = JSON.parse(localStorage.getItem('usuario'));
 
-            // --- 1. GUARDA DE AUTENTICAÇÃO (SEM ALERT) ---
+            // --- 1. GUARDA DE AUTENTICAÇÃO (Sem mudanças) ---
             if (!token || !usuario) {
-                // Não use alert. Apenas redirecione.
                 console.error("Não autorizado. Redirecionando para login.");
                 redirecionarParaLogin('Você precisa estar logado para ver esta página.');
-                return; // Para a execução do script
+                return;
             }
 
             // --- 2. LÓGICA DE LOGOUT (Sem mudanças) ---
@@ -153,9 +160,14 @@
                 }
             });
 
-            // --- 4. BUSCAR DADOS DO CARTÃO (COM MELHOR TRATAMENTO DE ERRO) ---
+            // --- 4. BUSCAR DADOS DO CARTÃO ---
             const cardNumberDisplay = document.getElementById('card-number');
             const lastUseDisplay = document.getElementById('last-use');
+            
+            // --- MUDANÇA AQUI (JavaScript) ---
+            // Pegamos o elemento <a> (link) que acabamos de criar no HTML
+            const rechargeLink = document.getElementById('recharge-link');
+            // --- FIM DA MUDANÇA ---
 
             try {
                 const response = await fetch('http://localhost:3000/api/cartoes/meus-cartoes', {
@@ -169,41 +181,42 @@
                 const data = await response.json();
 
                 if (!response.ok) {
-                    // Se a resposta não for OK, lança um erro com a mensagem do back-end
                     throw new Error(data.mensagem || `Erro ${response.status}`);
                 }
 
                 // SUCESSO AO BUSCAR CARTÕES
                 if (data.length > 0) {
-                    const cartao = data[0];
+                    const cartao = data[0]; // Pega o primeiro cartão
                     saldoValor = parseFloat(cartao.saldo);
                     cardNumberDisplay.textContent = `**** **** **** ${cartao.numero_cartao.slice(-4)}`;
                     lastUseDisplay.textContent = 'Última utilização em: 10/11/2025'; // Simulado
+
+                    // --- MUDANÇA AQUI (JavaScript) ---
+                    // Agora que temos o ID do cartão, nós atualizamos o link
+                    // e o habilitamos para o clique.
+                    rechargeLink.href = `recharge.html?id=${cartao.id_cartao}`;
+                    rechargeLink.classList.remove('pointer-events-none', 'opacity-50'); // Habilita o link
+                    // --- FIM DA MUDANÇA ---
+
                 } else {
-                    // --- MUDANÇA AQUI ---
-                    // Se não tiver cartão, mostra um link para cadastrar
+                    // (Sem mudanças aqui, continua mostrando o link para cadastrar)
                     cardNumberDisplay.textContent = 'Nenhum cartão encontrado.';
                     saldoDisplay.textContent = 'R$ 0.00';
-                    
-                    // Cria a mensagem com o link
                     const mensagemHtml = `
                         <span>Você está logado, mas ainda não cadastrou um cartão.</span>
                         <a href="add-card.html" class="font-bold underline text-blue-600 hover:text-blue-800 ml-1">
                             Cadastre um agora
                         </a>
                     `;
-                    // Usa a função mostrarErro com o modo HTML
                     mostrarErro(mensagemHtml, true);
                 }
 
             } catch (error) {
+                // (Sem mudanças aqui)
                 console.error('Erro na API do dashboard:', error);
-
-                // Se o erro for de autorização (401), chuta para o login
                 if (error.message.includes('401') || error.message.includes('token')) {
                     redirecionarParaLogin('Sua sessão expirou. Faça o login novamente.');
                 } else {
-                    // Mostra outros erros (ex: "Falha ao buscar") no dashboard
                     mostrarErro(`Erro ao carregar dados: ${error.message}`);
                 }
             }
