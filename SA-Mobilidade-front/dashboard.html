@@ -45,7 +45,7 @@
         <!-- ===== CONTEÚDO PRINCIPAL ===== -->
         <main class="p-4 space-y-4">
 
-            <!-- ***** MENSAGEM DE ERRO (NOVO) ***** -->
+            <!-- ***** MENSAGEM DE ERRO (ATUALIZADO) ***** -->
             <div id="dashboard-error" class="hidden p-4 rounded-lg bg-red-100 text-red-700 text-sm shadow">
                 <!-- Mensagens de erro do dashboard aparecerão aqui -->
             </div>
@@ -81,10 +81,17 @@
     </div>
 
     <script>
+        // --- ATUALIZAÇÃO AQUI ---
         // Função para mostrar erros no dashboard
-        function mostrarErro(mensagem) {
+        function mostrarErro(mensagem, ehHtml = false) {
             const errorDiv = document.getElementById('dashboard-error');
-            errorDiv.textContent = mensagem;
+            
+            if (ehHtml) {
+                errorDiv.innerHTML = mensagem; // Permite renderizar o link
+            } else {
+                errorDiv.textContent = mensagem;
+            }
+            
             errorDiv.classList.remove('hidden');
             // Role para o topo para ver o erro
             window.scrollTo(0, 0);
@@ -173,9 +180,20 @@
                     cardNumberDisplay.textContent = `**** **** **** ${cartao.numero_cartao.slice(-4)}`;
                     lastUseDisplay.textContent = 'Última utilização em: 10/11/2025'; // Simulado
                 } else {
+                    // --- MUDANÇA AQUI ---
+                    // Se não tiver cartão, mostra um link para cadastrar
                     cardNumberDisplay.textContent = 'Nenhum cartão encontrado.';
                     saldoDisplay.textContent = 'R$ 0.00';
-                    mostrarErro('Você está logado, mas ainda não cadastrou um cartão.');
+                    
+                    // Cria a mensagem com o link
+                    const mensagemHtml = `
+                        <span>Você está logado, mas ainda não cadastrou um cartão.</span>
+                        <a href="add-card.html" class="font-bold underline text-blue-600 hover:text-blue-800 ml-1">
+                            Cadastre um agora
+                        </a>
+                    `;
+                    // Usa a função mostrarErro com o modo HTML
+                    mostrarErro(mensagemHtml, true);
                 }
 
             } catch (error) {
