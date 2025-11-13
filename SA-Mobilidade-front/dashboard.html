@@ -65,11 +65,8 @@
                         <div class="flex items-center justify-between"><span class="text-3xl font-bold" id="saldo-display">R$ ********</span><button id="toggle-saldo" class="text-blue-100 hover:text-white"><svg id="icon-eye-visible" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg><svg id="icon-eye-hidden" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.22 16.338 7.244 19.5 12 19.5c.99 0 1.953-.138 2.863-.395M6.228 6.228A10.46 10.46 0 0 1 12 4.5c4.756 0 8.78 3.162 10.065 7.498a10.523 10.523 0 0 1-4.293 5.77M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.243 4.243L6.228 6.228" /></svg></button></div><span class="text-sm text-blue-100">Saldo Disponível</span>
                     </div>
                     
-                    <!-- === MUDANÇA AQUI (HTML) === -->
-                    <!-- O botão de Recarregar agora é um link (<a>) -->
-                    <!-- Ele começa desabilitado e será ativado pelo JavaScript -->
                     <div class="flex flex-col space-y-2">
-                        <a id="recharge-link" href="#" class="pointer-events-none opacity-50"> <!-- Começa desabilitado -->
+                        <a id="recharge-link" href="#" class="pointer-events-none opacity-50"> 
                             <button class="w-full flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700">
                                 <span>Recarregar</span>
                                 <svg class="h-5 w-5 ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182.997-.75 2.342-.75 3.339 0L12 12.01M12 6v12" /></svg>
@@ -77,10 +74,11 @@
                         </a>
                         <button class="px-4 py-2 bg-white text-blue-600 rounded-lg font-semibold shadow hover:bg-gray-50 border border-blue-600">Repetir Recarga</button>
                     </div>
-                    <!-- === FIM DA MUDANÇA (HTML) === -->
 
                 </div>
-                <div class="flex items-center space-x-2 text-sm text-gray-600"><svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg><span id="last-use">Última utilização em: --/--/----</span></div>
+                <!-- --- MUDANÇA AQUI (HTML) --- -->
+                <!-- O ID 'last-use' será preenchido pelo script -->
+                <div class="flex items-center space-x-2 text-sm text-gray-600"><svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg><span id="last-use">Nenhuma recarga realizada ainda.</span></div>
             </div>
 
             <!-- Card 3: Informações (Sem mudanças) -->
@@ -162,12 +160,10 @@
 
             // --- 4. BUSCAR DADOS DO CARTÃO ---
             const cardNumberDisplay = document.getElementById('card-number');
+            // --- MUDANÇA AQUI ---
+            // Pegamos o span da última recarga
             const lastUseDisplay = document.getElementById('last-use');
-            
-            // --- MUDANÇA AQUI (JavaScript) ---
-            // Pegamos o elemento <a> (link) que acabamos de criar no HTML
             const rechargeLink = document.getElementById('recharge-link');
-            // --- FIM DA MUDANÇA ---
 
             try {
                 const response = await fetch('http://localhost:3000/api/cartoes/meus-cartoes', {
@@ -189,14 +185,33 @@
                     const cartao = data[0]; // Pega o primeiro cartão
                     saldoValor = parseFloat(cartao.saldo);
                     cardNumberDisplay.textContent = `**** **** **** ${cartao.numero_cartao.slice(-4)}`;
-                    lastUseDisplay.textContent = 'Última utilização em: 10/11/2025'; // Simulado
-
-                    // --- MUDANÇA AQUI (JavaScript) ---
-                    // Agora que temos o ID do cartão, nós atualizamos o link
-                    // e o habilitamos para o clique.
-                    rechargeLink.href = `recharge.html?id=${cartao.id_cartao}`;
-                    rechargeLink.classList.remove('pointer-events-none', 'opacity-50'); // Habilita o link
+                    
+                    // --- MUDANÇA AQUI ---
+                    // Verifica se o campo 'ultima_recarga' (do back-end) existe
+                    if (cartao.ultima_recarga) {
+                        // Converte a string de data do back-end (que é formato ISO) para um objeto Date
+                        const dataRecarga = new Date(cartao.ultima_recarga);
+                        
+                        // Define as opções de formatação para o padrão brasileiro
+                        const options = { 
+                            day: '2-digit', 
+                            month: '2-digit', 
+                            year: 'numeric', 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                        };
+                        
+                        // Atualiza o texto
+                        lastUseDisplay.textContent = `Última recarga em: ${dataRecarga.toLocaleString('pt-BR', options)}`;
+                    } else {
+                        // Se 'ultima_recarga' for null (nenhuma recarga feita)
+                        lastUseDisplay.textContent = 'Nenhuma recarga realizada ainda.';
+                    }
                     // --- FIM DA MUDANÇA ---
+
+                    // Ativa o link de recarga
+                    rechargeLink.href = `recharge.html?id=${cartao.id_cartao}`;
+                    rechargeLink.classList.remove('pointer-events-none', 'opacity-50'); 
 
                 } else {
                     // (Sem mudanças aqui, continua mostrando o link para cadastrar)
